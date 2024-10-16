@@ -53,8 +53,8 @@ resource "aws_s3_bucket_policy" "policy_the_bucket" {
     Version = "2012-10-17"
     Statement = [
       {
-        Sid       = "PublicReadGetObject"
-        Effect    = "Allow"
+        Sid       = "NoPublicReadGetObject"
+        Effect    = "Deny"
         Principal = "*"
         Action    = "s3:GetObject"
         Resource = "${aws_s3_bucket.mpgbucket1968.arn}/*"
