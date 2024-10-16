@@ -1,14 +1,21 @@
-
-
 # Resource block for random string generator
-resource "random_string" "suffix" {
-  length  = 8
-  special = false
-}
+# resource "random_string" "suffix" {
+#   length  = 8
+#   special = false
+# }
 
-# Resource block to create S3 bucket with random suffix
+# # Resource block to create S3 bucket with random suffix
+# resource "aws_s3_bucket" "mpgbucket1968" {
+#   bucket = "mpgbucket1968-${random_string.suffix.result}"
+# }
+
 resource "aws_s3_bucket" "mpgbucket1968" {
-  bucket = "mpgbucket1968-${random_string.suffix.result}"
+  bucket = "mpgbucket1968"
+
+  tags = {
+    Name        = "mpgbucket1968"
+    Environment = "Dev"
+  }
 }
 
 # Enable versioning on the bucket
