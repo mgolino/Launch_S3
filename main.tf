@@ -6,10 +6,10 @@ resource "aws_s3_bucket" "mpgbucket" {
 }
 
 # Random string for unique bucket name
-resource "random_string" "suffix" {
-  length  = 8
-  special = false
-}
+# resource "random_string" "suffix" {
+#  length  = 8
+#  special = false
+#}
 
 # Enable versioning on the bucket
 resource "aws_s3_bucket_versioning" "version_the_bucket" {
