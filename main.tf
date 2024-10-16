@@ -8,7 +8,7 @@ resource "random_string" "suffix" {
 
 # Resource block to create S3 bucket with random suffix
 resource "aws_s3_bucket" "mpgbucket1968" {
-  bucket = "mpgbucket-${random_string.suffix.result}"
+  bucket = "mpgbucket1968-${random_string.suffix.result}"
 }
 
 # Enable versioning on the bucket
