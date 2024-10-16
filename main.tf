@@ -2,14 +2,14 @@
 
 # Resource block to create S3 bucket
 resource "aws_s3_bucket" "mpgbucket" {
-  bucket = "my-unique-bucket-name-${random_string.suffix.result}"  # Ensure the name is globally unique
+  bucket = "mpgbucket-${random_string.suffix.result}"  # Ensure the name is globally unique
 }
 
-# Random string for unique bucket name
-# resource "random_string" "suffix" {
-#  length  = 8
-#  special = false
-#}
+ Random string for unique bucket name
+ resource "random_string" "suffix" {
+  length  = 8
+  special = false
+}
 
 # Enable versioning on the bucket
 resource "aws_s3_bucket_versioning" "version_the_bucket" {
