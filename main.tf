@@ -1,20 +1,7 @@
-# Terraform block
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.0"  # Adjust to your required AWS provider version
-    }
-  }
-}
 
-# Provider block
-provider "aws" {
-  region = "us-west-2"  # Change this to your desired AWS region
-}
 
 # Resource block to create S3 bucket
-resource "aws_s3_bucket" "example_bucket" {
+resource "aws_s3_bucket" "mpgbucket" {
   bucket = "my-unique-bucket-name-${random_string.suffix.result}"  # Ensure the name is globally unique
 }
 
@@ -25,16 +12,16 @@ resource "random_string" "suffix" {
 }
 
 # Enable versioning on the bucket
-resource "aws_s3_bucket_versioning" "versioning_example" {
-  bucket = aws_s3_bucket.example_bucket.id
+resource "aws_s3_bucket_versioning" "version_the_bucket" {
+  bucket = aws_s3_bucket.mpgbucket.id
   versioning_configuration {
     status = "Enabled"
   }
 }
 
 # Enable server-side encryption
-resource "aws_s3_bucket_server_side_encryption_configuration" "example" {
-  bucket = aws_s3_bucket.example_bucket.bucket
+resource "aws_s3_bucket_server_side_encryption_configuration" "encrypt_the_bucket" {
+  bucket = aws_s3_bucket.mpgbucket.bucket
 
   rule {
     apply_server_side_encryption_by_default {
@@ -44,8 +31,8 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "example" {
 }
 
 # Optional: Bucket policy for public read access (NOT RECOMMENDED for production)
-resource "aws_s3_bucket_public_access_block" "example" {
-  bucket = aws_s3_bucket.example_bucket.id
+resource "aws_s3_bucket_public_access_block" "block_the_bucket" {
+  bucket = aws_s3_bucket.mpgbucket.id
 
   block_public_acls       = false
   block_public_policy     = false
@@ -53,8 +40,8 @@ resource "aws_s3_bucket_public_access_block" "example" {
   restrict_public_buckets = false
 }
 
-resource "aws_s3_bucket_policy" "example" {
-  bucket = aws_s3_bucket.example_bucket.id
+resource "aws_s3_bucket_policy" "policy_the_bucket" {
+  bucket = aws_s3_bucket.mpgbucket.id
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -63,7 +50,7 @@ resource "aws_s3_bucket_policy" "example" {
         Effect    = "Allow"
         Principal = "*"
         Action    = "s3:GetObject"
-        Resource = "${aws_s3_bucket.example_bucket.arn}/*"
+        Resource = "${aws_s3_bucket.mpgbucket.arn}/*"
       }
     ]
   })
